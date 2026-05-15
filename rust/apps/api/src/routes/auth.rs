@@ -1,19 +1,18 @@
+use axum::extract::State;
 use axum::{Json};
-use store::Store;
 use crate::schemas::response_schema::{SigninResponse, UserSigninFailed, UserSigninResponse};
 use crate::schemas::{request_schema,response_schema};
 use request_schema::{UserSigninBody, UserSignupBody};
 use response_schema::{UserSignupReponse};
+use crate::Store;
 
-
-pub async fn signup_handler(Json(body) : Json<UserSignupBody>) ->String{
+pub async fn signup_handler(State(mut store) : State<Store> ,Json(body) : Json<UserSignupBody>) ->String{
    let UserSignupBody {name, email, password} = body;
-
    // put this data into db and password should be hashed 
-   Store::create_user(&Store{
-      connection : String::from("alight")
-   });
-   format!("signin done!")
+   
+   let user_id = store.user_signup(name, email, password).expect("DB error");
+   
+   user_id.to_string()
    
 } 
 
