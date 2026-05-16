@@ -11,11 +11,11 @@ export const UserAuth = new Elysia({prefix : "/auth"})
         if('id' in res){
             return status(200, {
                 id : res.id,
-                success : false
+                success : res.success
             })
         }
         return status(400, {
-            success : false,
+            success : res.success,
             msg : res.msg
         })
     },{
