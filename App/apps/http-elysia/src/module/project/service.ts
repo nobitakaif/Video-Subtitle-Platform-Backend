@@ -64,9 +64,12 @@ export abstract class ProjectService {
                     video : true,
                     id : true,
                     title : true,
-                    subtitleTrack : true
+                    subtitleTrack : true,
+                    user : true,
+                    renderJobs : true
                 }
             })
+            console.log("project -> ", res)
             if(!res){
                 return {
                     success : false,
